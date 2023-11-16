@@ -69,6 +69,16 @@ public class Controller implements Initializable {
         });
 
         songProgressBar.setStyle("-fx-accent: #00FF00;");
+        songProgressBar.setOnMouseClicked(event -> {
+            double mouseX = event.getX();
+            double progressBarWidth = songProgressBar.getWidth();
+            double newSongTime = (mouseX / progressBarWidth) * mediaPlayer.getTotalDuration().toSeconds();
+            mediaPlayer.seek(Duration.seconds(newSongTime));
+        });
+
+        mediaPlayer.setOnEndOfMedia(() -> {
+            nextMedia(); // Call your method to play the next song
+        });
     }
 
     public void playMedia(){
